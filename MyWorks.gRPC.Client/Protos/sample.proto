@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "MyWorksgRPCClient";
+
+package sample;
+import "google/protobuf/empty.proto"; 
+
+service Sample {
+  rpc GetSimpleData (SimpleRequest) returns (SimpleReply);
+  rpc GeServerStream (StreamRequest) returns (stream StreamReply);
+  rpc GetClientStream (stream StreamRequest) returns (StreamReply);
+  rpc GetTwoWayStream (stream StreamRequest) returns (stream StreamReply);
+  rpc FileDownLoad (FileInfo) returns (stream BytesContent);
+  rpc FileUpLoad (stream BytesContent) returns(google.protobuf.Empty); 
+}
+
+message SimpleRequest {
+  string message = 1;
+}
+
+message SimpleReply {
+  string message = 1;
+}
+
+message StreamRequest {
+  string message = 1;
+}
+
+message StreamReply {
+  string message = 1;
+}
+
+message FileInfo{
+    string fileName = 1;
+    string fileExtension = 2;
+}
+
+message BytesContent{
+    int64 fileSize = 1;
+    bytes buffer = 2;
+    int32 readByte = 3;
+    FileInfo info = 4;
+}
